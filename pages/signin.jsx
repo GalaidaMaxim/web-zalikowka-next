@@ -15,7 +15,7 @@ export default function SignInPage() {
     if (student) {
       router.push("/plan");
     }
-  }, [student]);
+  }, [student, router]);
 
   const run = async (event) => {
     event.preventDefault();

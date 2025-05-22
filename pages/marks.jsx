@@ -47,7 +47,7 @@ export default function Marks() {
         return subject.semesters[semester - 1].include;
       })
     );
-  }, [student, semester, setSubjects, dispatch]);
+  }, [router, student, semester, setSubjects, dispatch]);
 
   return (
     <Outlet>

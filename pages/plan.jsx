@@ -23,7 +23,7 @@ export default function EducationPlan() {
     if (!student && !getToken()) {
       router.push("/");
     }
-  }, [student]);
+  }, [student, router]);
 
   return (
     <Outlet>

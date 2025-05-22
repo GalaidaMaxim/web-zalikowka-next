@@ -14,7 +14,7 @@ export const Outlet = ({ children }) => {
       return;
     }
     dispatch(refreshInfo(token));
-  }, [student]);
+  }, [student, dispatch]);
   return (
     <>
       <Header />
