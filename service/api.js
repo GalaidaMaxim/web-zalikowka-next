@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const baseURLRenderer = "https://webdecanatserver.onrender.com";
+// const baseURLRenderer = "https://webdecanatserver.onrender.com";
 // const localBaseUrl = "http://localhost:3001/";
 
-axios.defaults.baseURL = baseURLRenderer;
+axios.defaults.baseURL = "/api";
 
 export const signIn = async (ticketCode) => {
   const student = await axios.post("/students/auth", { ticketCode });

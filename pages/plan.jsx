@@ -20,7 +20,7 @@ export default function EducationPlan() {
   const router = useRouter();
   const student = useStudent();
   useEffect(() => {
-    if (!student || !getToken()) {
+    if (!student && !getToken()) {
       router.push("/");
     }
   }, [student]);

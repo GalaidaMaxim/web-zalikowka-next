@@ -34,7 +34,7 @@ export default function Marks() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!student || !getToken()) {
+    if (!student && !getToken()) {
       router.push("/");
     }
     if (!student) {
