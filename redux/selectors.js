@@ -12,3 +12,7 @@ export const useToken = () => {
 export const useStudent = () => {
   return useSelector((state) => state.student.value);
 };
+
+export const useLoading = () => {
+  return useSelector((state) => state.student.loading);
+};
