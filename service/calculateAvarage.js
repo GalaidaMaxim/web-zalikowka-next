@@ -25,6 +25,6 @@ export const calculateAvarage = (subjectList, semester) => {
       average += Number.parseInt(item.semesters[semester - 1].mark);
     }
   });
-  console.log(avarageCount);
+
   return average / avarageCount;
 };

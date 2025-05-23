@@ -7,7 +7,6 @@ export default async function AuthHandler(req, res) {
     const { ticketCode } = req.body;
     const { token, name, sername, secondName, subjects, course, level } =
       await signUpStudent(ticketCode);
-    console.log(token, name, sername, secondName, subjects, course, level);
 
     res
       .status(200)
