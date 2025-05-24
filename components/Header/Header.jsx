@@ -73,6 +73,11 @@ export const Header = () => {
                     Оцінки
                   </Typography>
                 </LinkStyled>
+                <LinkStyled href={"/selectable"}>
+                  <Typography color={"text.primary"} variant={"body1"}>
+                    Вибіркові предмети
+                  </Typography>
+                </LinkStyled>
               </Navigation>
             )}
             {!token ? (

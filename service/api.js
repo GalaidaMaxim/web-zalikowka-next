@@ -31,3 +31,12 @@ export const logout = async (token) => {
   );
   return data.data;
 };
+
+export const getSubjectsByPlan = async (token) => {
+  const data = await axios.get("/subjects/department", {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  return data.data;
+};
