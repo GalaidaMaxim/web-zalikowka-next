@@ -16,6 +16,16 @@ export const studentSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    addSubject: (state, { payload }) => {
+      console.log(payload);
+
+      state.value.subjects.push(payload);
+    },
+    removeSubject: (state, { payload }) => {
+      state.value.subjects = state.value.subjects.filter(
+        (item) => item._id != payload._id
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signInOperation.pending, (state) => {
@@ -69,4 +79,5 @@ export const studentSlice = createSlice({
   },
 });
 
-export const { setToken, clearStudent } = studentSlice.actions;
+export const { setToken, clearStudent, addSubject, removeSubject } =
+  studentSlice.actions;

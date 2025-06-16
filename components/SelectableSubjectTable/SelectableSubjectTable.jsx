@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 
 import { Fragment } from "react";
+import { addSubject, removeSubject } from "@/redux/slises";
+import { useDispatch } from "react-redux";
 
 const semestersFilter = (semesters = []) => {
   const arr = [];
@@ -28,6 +30,7 @@ export const SelectableSubjectTable = ({
   addSpec = false,
   disabled = false,
 }) => {
+  const dispatch = useDispatch();
   const specs = planSubjects.reduce((acc, item) => {
     if (acc.includes(item.aditionalSpecialityName)) {
       return acc;
@@ -42,6 +45,17 @@ export const SelectableSubjectTable = ({
     );
     subArr.push(subjArr);
   });
+
+  const onClick = (subject) => {
+    return ({ target }) => {
+      if (target.checked) {
+        dispatch(addSubject(subject));
+      } else {
+        dispatch(removeSubject(subject));
+      }
+    };
+  };
+
   return (
     <Box marginTop={4}>
       <Typography variant="h3">{title}</Typography>
@@ -65,6 +79,7 @@ export const SelectableSubjectTable = ({
                 </TableCell>
                 <TableCell>
                   <Checkbox
+                    onChange={onClick(subject)}
                     checked={studentStudjects.some(
                       (item) => item._id === subject._id
                     )}
