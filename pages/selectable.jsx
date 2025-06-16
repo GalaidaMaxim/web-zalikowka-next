@@ -7,7 +7,7 @@ import { getToken } from "@/service/storage";
 import { useRouter } from "next/router";
 import { getSubjectsByPlan } from "@/service/api";
 
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Typography, Button } from "@mui/material";
 import { SelectableSubjectTable } from "@/components/SelectableSubjectTable/SelectableSubjectTable";
 
 export default function Selectable() {
@@ -25,6 +25,12 @@ export default function Selectable() {
     })();
   }, [student, router]);
 
+  const credits = student
+    ? student.subjects.reduce((acc, item) => {
+        return acc + item.credits;
+      }, 0)
+    : 0;
+
   return (
     <Outlet>
       <ContainerCustom>
@@ -32,17 +38,36 @@ export default function Selectable() {
           <Paper>
             <Box padding={2}>
               <StudentHead student={student} />
+              <Box
+                sx={{
+                  marginTop: "20px",
+                  display: "flex",
+                  gap: "20px",
+                }}
+              >
+                <Typography variant="body1">Кредити</Typography>
+                <Typography
+                  sx={{ fontWeight: 700, fontSize: "40px" }}
+                  variant="h3"
+                >
+                  {credits}
+                </Typography>
+              </Box>
               <SelectableSubjectTable
                 title="Обов'зкові дисципліни"
                 planSubjects={planSubjects.filter(
                   (sub) => sub.code.charAt(0) === "1"
                 )}
+                studentStudjects={student.subjects}
+                disabled
               />
               <SelectableSubjectTable
                 title="Профільні дисципліни"
                 planSubjects={planSubjects.filter(
                   (sub) => sub.code.charAt(0) === "2"
                 )}
+                studentStudjects={student.subjects}
+                disabled
               />
 
               <SelectableSubjectTable
@@ -50,13 +75,19 @@ export default function Selectable() {
                 planSubjects={planSubjects.filter(
                   (sub) => sub.code.charAt(0) === "3"
                 )}
+                addSpec
+                studentStudjects={student.subjects}
               />
               <SelectableSubjectTable
                 title="Вибіркові дисципліни"
                 planSubjects={planSubjects.filter(
                   (sub) => sub.code.charAt(0) === "4"
                 )}
+                studentStudjects={student.subjects}
               />
+              <Box sx={{ marginTop: "20px" }}>
+                <Button variant="contained">Зберегти план</Button>
+              </Box>
             </Box>
           </Paper>
         )}

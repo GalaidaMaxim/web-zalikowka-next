@@ -6,7 +6,10 @@ import {
   TableBody,
   TableRow,
   Typography,
+  Checkbox,
 } from "@mui/material";
+
+import { Fragment } from "react";
 
 const semestersFilter = (semesters = []) => {
   const arr = [];
@@ -18,26 +21,104 @@ const semestersFilter = (semesters = []) => {
   return arr.join(" ");
 };
 
-export const SelectableSubjectTable = ({ title, planSubjects }) => {
+export const SelectableSubjectTable = ({
+  title,
+  planSubjects = [],
+  studentStudjects = [],
+  addSpec = false,
+  disabled = false,
+}) => {
+  const specs = planSubjects.reduce((acc, item) => {
+    if (acc.includes(item.aditionalSpecialityName)) {
+      return acc;
+    }
+    acc.push(item.aditionalSpecialityName);
+    return acc;
+  }, []);
+  const subArr = [];
+  specs.forEach((spec) => {
+    const subjArr = planSubjects.filter(
+      (item) => item.aditionalSpecialityName === spec
+    );
+    subArr.push(subjArr);
+  });
   return (
     <Box marginTop={4}>
       <Typography variant="h3">{title}</Typography>
-      <Table>
-        <TableHead>
-          <TableCell>Назва</TableCell>
-          <TableCell>Кількість кредитів</TableCell>
-          <TableCell>Семестри вивчення</TableCell>
-        </TableHead>
-        <TableBody>
-          {planSubjects.map((subject) => (
-            <TableRow key={subject._id}>
-              <TableCell>{subject.name}</TableCell>
-              <TableCell>{subject.credits}</TableCell>
-              <TableCell>{semestersFilter(subject.semesters)}</TableCell>
+      {!addSpec ? (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Назва</TableCell>
+              <TableCell>Кількість кредитів</TableCell>
+              <TableCell>Семестри вивчення</TableCell>
+              <TableCell>Вибір</TableCell>
             </TableRow>
+          </TableHead>
+          <TableBody>
+            {planSubjects.map((subject) => (
+              <TableRow key={subject._id}>
+                <TableCell sx={{ width: "400px" }}>{subject.name}</TableCell>
+                <TableCell sx={{ width: "200px" }}>{subject.credits}</TableCell>
+                <TableCell sx={{ width: "200px" }}>
+                  {semestersFilter(subject.semesters)}
+                </TableCell>
+                <TableCell>
+                  <Checkbox
+                    checked={studentStudjects.some(
+                      (item) => item._id === subject._id
+                    )}
+                    disabled={disabled}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <>
+          {specs.map((item, index) => (
+            <Fragment key={item}>
+              <Typography sx={{ marginTop: "60px" }} variant="body2">
+                {item}
+              </Typography>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Назва</TableCell>
+                    <TableCell>Кількість кредитів</TableCell>
+                    <TableCell>Семестри вивчення</TableCell>
+                    <TableCell>Вибір</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {subArr[index].map((subject) => (
+                    <TableRow key={subject._id}>
+                      <TableCell sx={{ width: "400px" }}>
+                        {subject.name}
+                      </TableCell>
+                      <TableCell sx={{ width: "200px" }}>
+                        {subject.credits}
+                      </TableCell>
+                      <TableCell sx={{ width: "200px" }}>
+                        {semestersFilter(subject.semesters)}
+                      </TableCell>
+                      <TableCell>
+                        <Checkbox
+                          checked={studentStudjects.some(
+                            (item) => item._id === subject._id
+                          )}
+                          disabled={disabled}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Fragment>
           ))}
-        </TableBody>
-      </Table>
+        </>
+      )}
     </Box>
   );
 };
