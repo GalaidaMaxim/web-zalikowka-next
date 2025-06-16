@@ -11,7 +11,7 @@ const EducationPlan = new Schema({
     default: "бакалавр",
   },
   credits: {
-    type: String,
+    type: Number,
     default: 0,
   },
 });

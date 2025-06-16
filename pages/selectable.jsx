@@ -5,7 +5,7 @@ import { Outlet } from "@/components/Outlet/Outlet";
 import { useEffect, useState } from "react";
 import { getToken } from "@/service/storage";
 import { useRouter } from "next/router";
-import { getSubjectsByPlan } from "@/service/api";
+import { getSubjectsByPlan, getEducationPlan } from "@/service/api";
 
 import { Box, Paper, Typography, Button } from "@mui/material";
 import { SelectableSubjectTable } from "@/components/SelectableSubjectTable/SelectableSubjectTable";
@@ -14,6 +14,7 @@ export default function Selectable() {
   const router = useRouter();
   const student = useStudent();
   const [planSubjects, setPlanSubjects] = useState([]);
+  const [plan, setPlan] = useState({});
   useEffect(() => {
     if (!student && !getToken()) {
       router.push("/");
@@ -22,8 +23,13 @@ export default function Selectable() {
     (async () => {
       const planSubjects = await getSubjectsByPlan(getToken());
       setPlanSubjects(planSubjects);
+      if (!student) {
+        return;
+      }
+      const plan = await getEducationPlan(student.educationPlan);
+      setPlan(plan);
     })();
-  }, [student, router]);
+  }, [student, router, setPlan]);
 
   const credits = student
     ? student.subjects.reduce((acc, item) => {
@@ -51,6 +57,13 @@ export default function Selectable() {
                   variant="h3"
                 >
                   {credits}
+                </Typography>
+                <Typography variant="body1">необхідно</Typography>
+                <Typography
+                  sx={{ fontWeight: 700, fontSize: "40px" }}
+                  variant="h3"
+                >
+                  {plan && plan.credits}
                 </Typography>
               </Box>
               <SelectableSubjectTable

@@ -40,3 +40,12 @@ export const getSubjectsByPlan = async (token) => {
   });
   return data.data;
 };
+
+export const getEducationPlan = async (id) => {
+  const data = await axios.get("/education-plan", {
+    params: {
+      id,
+    },
+  });
+  return data.data;
+};
