@@ -15,21 +15,30 @@ export default function Selectable() {
   const student = useStudent();
   const [planSubjects, setPlanSubjects] = useState([]);
   const [plan, setPlan] = useState({});
+  const [fload, setfload] = useState(false);
+
   useEffect(() => {
     if (!student && !getToken()) {
       router.push("/");
       return;
     }
+    if (fload) {
+      return;
+    }
     (async () => {
       const planSubjects = await getSubjectsByPlan(getToken());
       setPlanSubjects(planSubjects);
-      if (!student) {
-        return;
-      }
-      const plan = await getEducationPlan(student.educationPlan);
-      setPlan(plan);
     })();
-  }, [student, router, setPlan]);
+
+    if (!student) {
+      return;
+    }
+    (async () => {
+      const eduPlan = await getEducationPlan(student.educationPlan);
+      setPlan(eduPlan);
+      setfload(true);
+    })();
+  }, [student, router, setPlan, fload]);
 
   const credits = student
     ? student.subjects.reduce((acc, item) => {
@@ -99,7 +108,9 @@ export default function Selectable() {
                 studentStudjects={student.subjects}
               />
               <Box sx={{ marginTop: "20px" }}>
-                <Button variant="contained">Зберегти план</Button>
+                <Button disabled={plan.credits !== credits} variant="contained">
+                  Зберегти план
+                </Button>
               </Box>
             </Box>
           </Paper>

@@ -120,6 +120,7 @@ export const SelectableSubjectTable = ({
                       </TableCell>
                       <TableCell>
                         <Checkbox
+                          onChange={onClick(subject)}
                           checked={studentStudjects.some(
                             (item) => item._id === subject._id
                           )}
