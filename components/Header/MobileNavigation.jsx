@@ -47,7 +47,7 @@ export const MobileNvaigation = ({ logout = () => {} }) => {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <LinkStyled to={"/plan"}>
+                  <LinkStyled href={"/plan"}>
                     <Typography color={"text.primary"} variant={"body1"}>
                       Індивідуальний план
                     </Typography>
@@ -56,9 +56,19 @@ export const MobileNvaigation = ({ logout = () => {} }) => {
               </TableRow>
               <TableRow>
                 <TableCell>
-                  <LinkStyled to={"/marks"}>
+                  <LinkStyled href={"/marks"}>
                     <Typography color={"text.primary"} variant={"body1"}>
                       Оцінки
+                    </Typography>
+                  </LinkStyled>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell>
+                  <LinkStyled href={"/selectable"}>
+                    <Typography color={"text.primary"} variant={"body1"}>
+                      Вибіркові предмети
                     </Typography>
                   </LinkStyled>
                 </TableCell>
