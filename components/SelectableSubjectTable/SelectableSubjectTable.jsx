@@ -12,6 +12,11 @@ import {
 import { Fragment } from "react";
 import { addSubject, removeSubject } from "@/redux/slises";
 import { useDispatch } from "react-redux";
+import styled from "@emotion/styled";
+
+const StyledTableCell = styled(TableCell)`
+  padding: 0px 16px 0px 16px;
+`;
 
 const semestersFilter = (semesters = []) => {
   const arr = [];
@@ -72,12 +77,16 @@ export const SelectableSubjectTable = ({
           <TableBody>
             {planSubjects.map((subject) => (
               <TableRow key={subject._id}>
-                <TableCell sx={{ width: "400px" }}>{subject.name}</TableCell>
-                <TableCell sx={{ width: "200px" }}>{subject.credits}</TableCell>
-                <TableCell sx={{ width: "200px" }}>
+                <StyledTableCell sx={{ width: "400px" }}>
+                  {subject.name}
+                </StyledTableCell>
+                <StyledTableCell sx={{ width: "200px" }}>
+                  {subject.credits}
+                </StyledTableCell>
+                <StyledTableCell sx={{ width: "200px" }}>
                   {semestersFilter(subject.semesters)}
-                </TableCell>
-                <TableCell>
+                </StyledTableCell>
+                <StyledTableCell>
                   <Checkbox
                     onChange={onClick(subject)}
                     checked={studentStudjects.some(
@@ -85,7 +94,7 @@ export const SelectableSubjectTable = ({
                     )}
                     disabled={disabled}
                   />
-                </TableCell>
+                </StyledTableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -109,16 +118,16 @@ export const SelectableSubjectTable = ({
                 <TableBody>
                   {subArr[index].map((subject) => (
                     <TableRow key={subject._id}>
-                      <TableCell sx={{ width: "400px" }}>
+                      <StyledTableCell sx={{ width: "400px" }}>
                         {subject.name}
-                      </TableCell>
-                      <TableCell sx={{ width: "200px" }}>
+                      </StyledTableCell>
+                      <StyledTableCell sx={{ width: "200px" }}>
                         {subject.credits}
-                      </TableCell>
-                      <TableCell sx={{ width: "200px" }}>
+                      </StyledTableCell>
+                      <StyledTableCell sx={{ width: "200px" }}>
                         {semestersFilter(subject.semesters)}
-                      </TableCell>
-                      <TableCell>
+                      </StyledTableCell>
+                      <StyledTableCell>
                         <Checkbox
                           onChange={onClick(subject)}
                           checked={studentStudjects.some(
@@ -126,7 +135,7 @@ export const SelectableSubjectTable = ({
                           )}
                           disabled={disabled}
                         />
-                      </TableCell>
+                      </StyledTableCell>
                     </TableRow>
                   ))}
                 </TableBody>
