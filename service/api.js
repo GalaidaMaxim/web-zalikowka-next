@@ -49,3 +49,16 @@ export const getEducationPlan = async (id) => {
   });
   return data.data;
 };
+
+export const saveSubjects = async (token = "", subjects = []) => {
+  const data = await axios.patch(
+    "/students/subjects",
+    { subjects },
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return data.data;
+};

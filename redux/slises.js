@@ -17,8 +17,6 @@ export const studentSlice = createSlice({
       state.error = null;
     },
     addSubject: (state, { payload }) => {
-      console.log(payload);
-
       state.value.subjects.push(payload);
     },
     removeSubject: (state, { payload }) => {
@@ -79,5 +77,22 @@ export const studentSlice = createSlice({
   },
 });
 
+export const loadingSlice = createSlice({
+  name: "student",
+  initialState: {
+    value: false,
+  },
+  reducers: {
+    enableLoading: (state) => {
+      state.value = true;
+    },
+    disableLoading: (state) => {
+      state.value = false;
+    },
+  },
+});
+
 export const { setToken, clearStudent, addSubject, removeSubject } =
   studentSlice.actions;
+
+export const { enableLoading, disableLoading } = loadingSlice.actions;

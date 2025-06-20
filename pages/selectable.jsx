@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { getToken } from "@/service/storage";
 import { useRouter } from "next/router";
 import { getSubjectsByPlan, getEducationPlan } from "@/service/api";
+import { useDispatch } from "react-redux";
+import { enableLoading, disableLoading } from "@/redux/slises";
+import { saveSubjects } from "@/service/api";
 
 import { Box, Paper, Typography, Button } from "@mui/material";
 import { SelectableSubjectTable } from "@/components/SelectableSubjectTable/SelectableSubjectTable";
@@ -16,6 +19,8 @@ export default function Selectable() {
   const [planSubjects, setPlanSubjects] = useState([]);
   const [plan, setPlan] = useState({});
   const [fload, setfload] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!student && !getToken()) {
@@ -30,7 +35,7 @@ export default function Selectable() {
       setPlanSubjects(planSubjects);
     })();
 
-    if (!student) {
+    if (!student || !student.educationPlan) {
       return;
     }
     (async () => {
@@ -45,6 +50,17 @@ export default function Selectable() {
         return acc + item.credits;
       }, 0)
     : 0;
+
+  const onSave = async () => {
+    const token = getToken();
+    try {
+      dispatch(enableLoading());
+      const result = await saveSubjects(getToken(), student.subjects);
+    } catch (err) {
+      console.log(err);
+    }
+    dispatch(disableLoading());
+  };
 
   return (
     <Outlet>
@@ -108,7 +124,11 @@ export default function Selectable() {
                 studentStudjects={student.subjects}
               />
               <Box sx={{ marginTop: "20px" }}>
-                <Button disabled={plan.credits !== credits} variant="contained">
+                <Button
+                  disabled={credits !== plan.credits}
+                  onClick={onSave}
+                  variant="contained"
+                >
                   Зберегти план
                 </Button>
               </Box>

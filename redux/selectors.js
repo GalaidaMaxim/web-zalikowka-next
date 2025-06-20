@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { getToken } from "../service/storage";
 
 export const useToken = () => {
   return useSelector((state) => {
@@ -14,5 +13,5 @@ export const useStudent = () => {
 };
 
 export const useLoading = () => {
-  return useSelector((state) => state.student.loading);
+  return useSelector((state) => state.student.loading || state.loading.value);
 };
