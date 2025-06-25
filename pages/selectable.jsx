@@ -52,7 +52,6 @@ export default function Selectable() {
     : 0;
 
   const onSave = async () => {
-    const token = getToken();
     try {
       dispatch(enableLoading());
       const result = await saveSubjects(getToken(), student.subjects);

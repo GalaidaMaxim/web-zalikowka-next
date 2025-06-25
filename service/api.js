@@ -62,3 +62,10 @@ export const saveSubjects = async (token = "", subjects = []) => {
   );
   return data.data;
 };
+
+export const getAppState = async () => {
+  const data = await axios.get("/state");
+  console.log(data);
+
+  return data.data;
+};

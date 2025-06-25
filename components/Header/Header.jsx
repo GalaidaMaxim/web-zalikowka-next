@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { logoutOperation } from "../../redux/operations";
 import { MobileNvaigation } from "./MobileNavigation";
 import Link from "next/link";
+import { useAppSatate } from "../../redux/selectors";
 
 const StyledHeader = styled(AppBar)`
   height: 4rem;
@@ -39,6 +40,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down("tablet"));
+  const appState = useAppSatate();
 
   const logout = () => {
     dispatch(logoutOperation(token));
@@ -73,11 +75,13 @@ export const Header = () => {
                     Оцінки
                   </Typography>
                 </LinkStyled>
-                <LinkStyled href={"/selectable"}>
-                  <Typography color={"text.primary"} variant={"body1"}>
-                    Вибіркові предмети
-                  </Typography>
-                </LinkStyled>
+                {appState && appState.openForSelectSubject && (
+                  <LinkStyled href={"/selectable"}>
+                    <Typography color={"text.primary"} variant={"body1"}>
+                      Вибіркові предмети
+                    </Typography>
+                  </LinkStyled>
+                )}
               </Navigation>
             )}
             {!token ? (

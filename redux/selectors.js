@@ -13,5 +13,12 @@ export const useStudent = () => {
 };
 
 export const useLoading = () => {
-  return useSelector((state) => state.student.loading || state.loading.value);
+  return useSelector(
+    (state) =>
+      state.student.loading || state.loading.value || state.appState.loading
+  );
+};
+
+export const useAppSatate = () => {
+  return useSelector((state) => state.appState.value);
 };

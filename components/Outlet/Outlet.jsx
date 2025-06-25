@@ -2,7 +2,7 @@ import { Header } from "../Header/Header";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getToken } from "@/service/storage";
-import { refreshInfo } from "@/redux/operations";
+import { refreshInfo, getAppStateOperation } from "@/redux/operations";
 import { useStudent } from "@/redux/selectors";
 import { Box, CircularProgress } from "@mui/material";
 import { useLoading } from "@/redux/selectors";
@@ -14,6 +14,9 @@ export const Outlet = ({ children }) => {
 
   useEffect(() => {
     const token = getToken();
+    console.log("Here");
+
+    dispatch(getAppStateOperation());
     if (!token || student) {
       return;
     }
