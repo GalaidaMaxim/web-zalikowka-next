@@ -9,6 +9,7 @@ import { getSubjectsByPlan, getEducationPlan } from "@/service/api";
 import { useDispatch } from "react-redux";
 import { enableLoading, disableLoading } from "@/redux/slises";
 import { saveSubjects } from "@/service/api";
+import { useAppSatate } from "../redux/selectors";
 
 import { Box, Paper, Typography, Button } from "@mui/material";
 import { SelectableSubjectTable } from "@/components/SelectableSubjectTable/SelectableSubjectTable";
@@ -21,6 +22,7 @@ export default function Selectable() {
   const [fload, setfload] = useState(false);
 
   const dispatch = useDispatch();
+  const appState = useAppSatate();
 
   useEffect(() => {
     if (!student && !getToken()) {
@@ -44,6 +46,13 @@ export default function Selectable() {
       setfload(true);
     })();
   }, [student, router, setPlan, fload]);
+
+  useEffect(() => {
+    if (!(appState && appState.openForSelectSubject)) {
+      router.push("/");
+      return;
+    }
+  }, []);
 
   const credits = student
     ? student.subjects.reduce((acc, item) => {

@@ -55,12 +55,8 @@ export const getAppStateOperation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const result = await getAppState();
-      console.log(result);
-
       return result;
     } catch ({ response }) {
-      console.log(response);
-
       const error = {
         status: response.status,
         message: response.data.message,
