@@ -48,6 +48,9 @@ export default function Selectable() {
   }, [student, router, setPlan, fload]);
 
   useEffect(() => {
+    if (!appState) {
+      return;
+    }
     if (!(appState && appState.openForSelectSubject)) {
       router.push("/");
       return;
@@ -63,7 +66,7 @@ export default function Selectable() {
   const onSave = async () => {
     try {
       dispatch(enableLoading());
-      const result = await saveSubjects(getToken(), student.subjects);
+      await saveSubjects(getToken(), student.subjects);
     } catch (err) {
       console.log(err);
     }

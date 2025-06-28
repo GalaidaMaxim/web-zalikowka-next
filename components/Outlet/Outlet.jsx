@@ -14,12 +14,12 @@ export const Outlet = ({ children }) => {
 
   useEffect(() => {
     const token = getToken();
-    console.log("Here");
-
-    dispatch(getAppStateOperation());
     if (!token || student) {
       return;
     }
+    dispatch(getAppStateOperation());
+    console.log("here");
+
     dispatch(refreshInfo(token));
   }, [student, dispatch]);
   return (

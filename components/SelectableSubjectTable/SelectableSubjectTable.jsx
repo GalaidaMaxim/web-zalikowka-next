@@ -13,10 +13,22 @@ import { Fragment } from "react";
 import { addSubject, removeSubject } from "@/redux/slises";
 import { useDispatch } from "react-redux";
 import styled from "@emotion/styled";
+import { darkTheme } from "@/theme/darkTheme";
 
-const StyledTableCell = styled(TableCell)`
-  padding: 0px 16px 0px 16px;
-`;
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  padding: "0px 16px 0px 16px",
+  [theme.breakpoints.down("tablet")]: {
+    padding: "0px 5px 0px 5px",
+    fontSize: "10px",
+  },
+}));
+
+const StyledTableHead = styled(TableCell)(({ theme }) => ({
+  [theme.breakpoints.down("tablet")]: {
+    padding: "0px 5px 0px 5px",
+    fontSize: "10px",
+  },
+}));
 
 const semestersFilter = (semesters = []) => {
   const arr = [];
@@ -68,22 +80,43 @@ export const SelectableSubjectTable = ({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Назва</TableCell>
-              <TableCell>Кількість кредитів</TableCell>
-              <TableCell>Семестри вивчення</TableCell>
-              <TableCell>Вибір</TableCell>
+              <StyledTableHead>Назва</StyledTableHead>
+              <StyledTableHead>Кількість кредитів</StyledTableHead>
+              <StyledTableHead>Семестри вивчення</StyledTableHead>
+              <StyledTableHead>Вибір</StyledTableHead>
             </TableRow>
           </TableHead>
           <TableBody>
             {planSubjects.map((subject) => (
               <TableRow key={subject._id}>
-                <StyledTableCell sx={{ width: "400px" }}>
+                <StyledTableCell
+                  sx={{
+                    width: "100px",
+                    [darkTheme.breakpoints.up("tablet")]: {
+                      width: "400px",
+                    },
+                  }}
+                >
                   {subject.name}
                 </StyledTableCell>
-                <StyledTableCell sx={{ width: "200px" }}>
+                <StyledTableCell
+                  sx={{
+                    width: "100px",
+                    [darkTheme.breakpoints.up("tablet")]: {
+                      width: "200px",
+                    },
+                  }}
+                >
                   {subject.credits}
                 </StyledTableCell>
-                <StyledTableCell sx={{ width: "200px" }}>
+                <StyledTableCell
+                  sx={{
+                    width: "100px",
+                    [darkTheme.breakpoints.up("tablet")]: {
+                      width: "200px",
+                    },
+                  }}
+                >
                   {semestersFilter(subject.semesters)}
                 </StyledTableCell>
                 <StyledTableCell>
@@ -109,22 +142,43 @@ export const SelectableSubjectTable = ({
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Назва</TableCell>
-                    <TableCell>Кількість кредитів</TableCell>
-                    <TableCell>Семестри вивчення</TableCell>
-                    <TableCell>Вибір</TableCell>
+                    <StyledTableHead>Назва</StyledTableHead>
+                    <StyledTableHead>Кількість кредитів</StyledTableHead>
+                    <StyledTableHead>Семестри вивчення</StyledTableHead>
+                    <StyledTableHead>Вибір</StyledTableHead>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {subArr[index].map((subject) => (
                     <TableRow key={subject._id}>
-                      <StyledTableCell sx={{ width: "400px" }}>
+                      <StyledTableCell
+                        sx={{
+                          width: "100px",
+                          [darkTheme.breakpoints.up("tablet")]: {
+                            width: "400px",
+                          },
+                        }}
+                      >
                         {subject.name}
                       </StyledTableCell>
-                      <StyledTableCell sx={{ width: "200px" }}>
+                      <StyledTableCell
+                        sx={{
+                          width: "100px",
+                          [darkTheme.breakpoints.up("tablet")]: {
+                            width: "200px",
+                          },
+                        }}
+                      >
                         {subject.credits}
                       </StyledTableCell>
-                      <StyledTableCell sx={{ width: "200px" }}>
+                      <StyledTableCell
+                        sx={{
+                          width: "100px",
+                          [darkTheme.breakpoints.up("tablet")]: {
+                            width: "200px",
+                          },
+                        }}
+                      >
                         {semestersFilter(subject.semesters)}
                       </StyledTableCell>
                       <StyledTableCell>
