@@ -4,10 +4,7 @@ import { Header } from "@/components/Header/Header";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head>
-        <title>Web заліковка</title>
-        <link rel="icon" href="./favicon.ico" sizes="any" />
-      </Head>
+      <Head />
       <body>
         <Main />
         <NextScript />

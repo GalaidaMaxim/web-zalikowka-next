@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signInOperation, logoutOperation, refreshInfo } from "./operations";
+import {
+  signInOperation,
+  logoutOperation,
+  refreshInfo,
+  getAppStateOperation,
+} from "./operations";
 import { deleteToken, setTokenToLocalStorage } from "../service/storage";
 
 export const studentSlice = createSlice({
@@ -15,6 +20,14 @@ export const studentSlice = createSlice({
       state.value = null;
       state.loading = false;
       state.error = null;
+    },
+    addSubject: (state, { payload }) => {
+      state.value.subjects.push(payload);
+    },
+    removeSubject: (state, { payload }) => {
+      state.value.subjects = state.value.subjects.filter(
+        (item) => item._id != payload._id
+      );
     },
   },
   extraReducers: (builder) => {
@@ -69,4 +82,48 @@ export const studentSlice = createSlice({
   },
 });
 
-export const { setToken, clearStudent } = studentSlice.actions;
+export const loadingSlice = createSlice({
+  name: "student",
+  initialState: {
+    value: false,
+  },
+  reducers: {
+    enableLoading: (state) => {
+      state.value = true;
+    },
+    disableLoading: (state) => {
+      state.value = false;
+    },
+  },
+});
+
+export const appStateSlice = createSlice({
+  name: "appState",
+  initialState: {
+    value: null,
+    loading: false,
+    error: null,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getAppStateOperation.pending(), (state, { payload }) => {
+      state.error = null;
+      state.value = null;
+      state.loading = true;
+    });
+    builder.addCase(getAppStateOperation.fulfilled(), (state, { payload }) => {
+      state.error = null;
+      state.value = payload;
+      state.loading = false;
+    });
+    builder.addCase(getAppStateOperation.rejected(), (state, { payload }) => {
+      state.error = payload;
+      state.value = null;
+      state.loading = false;
+    });
+  },
+});
+
+export const { setToken, clearStudent, addSubject, removeSubject } =
+  studentSlice.actions;
+
+export const { enableLoading, disableLoading } = loadingSlice.actions;

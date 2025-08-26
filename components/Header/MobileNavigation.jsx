@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useToken } from "../../redux/selectors";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useAppSatate } from "../../redux/selectors";
 
 const LinkStyled = styled(Link)`
   text-decoration: none;
@@ -25,6 +26,7 @@ export const MobileNvaigation = ({ logout = () => {} }) => {
   const [open, setOpen] = useState(false);
   const token = useToken();
   const router = useRouter();
+  const appState = useAppSatate();
   return (
     <>
       {token ? (
@@ -63,6 +65,18 @@ export const MobileNvaigation = ({ logout = () => {} }) => {
                   </LinkStyled>
                 </TableCell>
               </TableRow>
+
+              {appState && appState.openForSelectSubject && (
+                <TableRow>
+                  <TableCell>
+                    <LinkStyled href={"/selectable"}>
+                      <Typography color={"text.primary"} variant={"body1"}>
+                        Вибіркові предмети
+                      </Typography>
+                    </LinkStyled>
+                  </TableCell>
+                </TableRow>
+              )}
               <TableRow>
                 <TableCell>
                   <Button

@@ -14,6 +14,8 @@ import { useDispatch } from "react-redux";
 import { logoutOperation } from "../../redux/operations";
 import { MobileNvaigation } from "./MobileNavigation";
 import Link from "next/link";
+import { useAppSatate } from "../../redux/selectors";
+import { useStudent } from "../../redux/selectors";
 
 const StyledHeader = styled(AppBar)`
   height: 4rem;
@@ -39,10 +41,15 @@ export const Header = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isPhone = useMediaQuery(theme.breakpoints.down("tablet"));
+  const appState = useAppSatate();
+  const student = useStudent();
 
   const logout = () => {
     dispatch(logoutOperation(token));
   };
+
+  console.log(student);
+
   return (
     <StyledHeader position="static">
       <ContainerCustom
@@ -73,6 +80,13 @@ export const Header = () => {
                     Оцінки
                   </Typography>
                 </LinkStyled>
+                {appState?.openForSelectSubject && student?.course === 1 && (
+                  <LinkStyled href={"/selectable"}>
+                    <Typography color={"text.primary"} variant={"body1"}>
+                      Вибіркові предмети
+                    </Typography>
+                  </LinkStyled>
+                )}
               </Navigation>
             )}
             {!token ? (

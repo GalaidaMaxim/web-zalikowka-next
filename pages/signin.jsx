@@ -1,6 +1,6 @@
 import { Box, Paper, Typography, TextField, Button } from "@mui/material";
 import { useState, useEffect } from "react";
-import { signInOperation } from "../redux/operations";
+import { signInOperation, getAppStateOperation } from "../redux/operations";
 import { useDispatch } from "react-redux";
 import { Outlet } from "@/components/Outlet/Outlet";
 import { useStudent } from "@/redux/selectors";
@@ -20,6 +20,7 @@ export default function SignInPage() {
   const run = async (event) => {
     event.preventDefault();
     dispatch(signInOperation(ticketCode));
+    dispatch(getAppStateOperation());
   };
   return (
     <Outlet>
