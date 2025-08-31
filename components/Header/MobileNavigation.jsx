@@ -17,6 +17,7 @@ import { useToken } from "../../redux/selectors";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useAppSatate } from "../../redux/selectors";
+import { useStudent } from "../../redux/selectors";
 
 const LinkStyled = styled(Link)`
   text-decoration: none;
@@ -27,6 +28,7 @@ export const MobileNvaigation = ({ logout = () => {} }) => {
   const token = useToken();
   const router = useRouter();
   const appState = useAppSatate();
+  const student = useStudent();
   return (
     <>
       {token ? (
@@ -66,7 +68,7 @@ export const MobileNvaigation = ({ logout = () => {} }) => {
                 </TableCell>
               </TableRow>
 
-              {appState && appState.openForSelectSubject && (
+              {appState?.openForSelectSubject && student?.course === 1 && (
                 <TableRow>
                   <TableCell>
                     <LinkStyled href={"/selectable"}>
