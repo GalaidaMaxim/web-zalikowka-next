@@ -1,5 +1,6 @@
 import { authMidlvare } from "@/service/jwt";
 import { connectToDatabase } from "@/mongoose/mongooseConnect";
+
 export default async function StudentsHandler(req, res) {
   try {
     await connectToDatabase();

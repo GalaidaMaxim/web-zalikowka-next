@@ -1,6 +1,7 @@
 import JWT from "jsonwebtoken";
 import createError from "../service/createError";
 import Student from "@/models/Student";
+import EducationPlan from "@/models/EducationPlan";
 
 const secret = "GLIERA";
 
@@ -27,6 +28,8 @@ export const authMidlvare = async (req, res) => {
     if (student.token !== token) {
       throw "err";
     }
+    const educationPlan = await EducationPlan.findById(student.educationPlan);
+    student.educationPlan = educationPlan;
     req.student = student;
   } catch (err) {
     throw createError(403, "Auth error");

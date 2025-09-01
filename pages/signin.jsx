@@ -47,10 +47,11 @@ export default function SignInPage() {
           <Typography textAlign={"center"} variant="h3">
             Увійти до заліковки
           </Typography>
+
           <TextField
             onChange={(event) => setTicketCode(event.target.value)}
             value={ticketCode}
-            label={"Квиток"}
+            label={"Номер телефону"}
             variant="standard"
             fullWidth
           />

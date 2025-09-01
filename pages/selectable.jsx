@@ -25,6 +25,7 @@ export default function Selectable() {
   const appState = useAppSatate();
 
   useEffect(() => {
+    console.log("useEffect triggered", { student, fload });
     if (!student && !getToken()) {
       router.push("/");
       return;
@@ -40,11 +41,6 @@ export default function Selectable() {
     if (!student || !student.educationPlan) {
       return;
     }
-    (async () => {
-      const eduPlan = await getEducationPlan(student.educationPlan);
-      setPlan(eduPlan);
-      setfload(true);
-    })();
   }, [student, router, setPlan, fload]);
 
   useEffect(() => {
@@ -99,7 +95,7 @@ export default function Selectable() {
                   sx={{ fontWeight: 700, fontSize: "40px" }}
                   variant="h3"
                 >
-                  {plan && plan.credits}
+                  {student?.educationPlan.credits}
                 </Typography>
               </Box>
               <SelectableSubjectTable
@@ -136,7 +132,7 @@ export default function Selectable() {
               />
               <Box sx={{ marginTop: "20px" }}>
                 <Button
-                  disabled={credits !== plan.credits}
+                  disabled={credits !== student.educationPlan.credits}
                   onClick={onSave}
                   variant="contained"
                 >

@@ -5,13 +5,24 @@ export default async function AuthHandler(req, res) {
   try {
     await connectToDatabase();
     const { ticketCode } = req.body;
-    const { token, name, sername, secondName, subjects, course, level } =
-      await signUpStudent(ticketCode);
+    const { student, educationPlan } = await signUpStudent(ticketCode);
 
-    res
-      .status(200)
-      .json({ token, name, sername, secondName, subjects, course, level });
+    const { token, name, sername, secondName, subjects, course, level } =
+      student;
+
+    res.status(200).json({
+      token,
+      name,
+      sername,
+      secondName,
+      subjects,
+      course,
+      level,
+      educationPlan,
+    });
   } catch (err) {
-    res.status(err.status).json({ message: err.message });
+    console.log(err.message);
+
+    res.status(err.status || 500).json({ message: err.message });
   }
 }
